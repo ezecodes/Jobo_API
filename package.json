@@ -1,0 +1,37 @@
+{
+  "name": "bankcraft",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www",
+    "pm2": "pm2 start bankcraft"
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+      "node_modules/",
+      "build/",
+      "public/",
+      "views/"
+    ],
+    "delay": "1000",
+    "env": {
+      "NODE_ENV": "development"
+    },
+    "ext": "js,www"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "debug": "^4.3.4",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "http-errors": "^2.0.0",
+    "mongoose": "^5.13.20",
+    "morgan": "^1.10.0",
+    "node-sass-middleware": "^1.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
