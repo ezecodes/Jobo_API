@@ -11,6 +11,9 @@ module.exports = {
 	OPEN_BANKING_PK: process.env.OPEN_BANKING_PK,
 	OPEN_BANKING_SK: process.env.OPEN_BANKING_SK,
 
+	USER_JWT_SECRET: process.env.USER_JWT_SECRET,
+	USER_COOKIE_SECRET: process.env.USER_JWT_SECRET,
+
 	CONSTANTS: {
 		BUDGET_PRIORITY_LEVELS: ['high', 'medium', 'low'],
 	}
