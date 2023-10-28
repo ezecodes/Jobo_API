@@ -7,6 +7,9 @@
 var app = require('../app');
 var debug = require('debug')('bankcraft:server');
 var http = require('http');
+var {establishConnection} = require('../utils')
+var logger = require('../logger')
+
 
 /**
  * Get port from environment and store in Express.
@@ -81,10 +84,14 @@ function onError(error) {
  * Event listener for HTTP server "listening" event.
  */
 
-function onListening() {
+async function onListening() {
   var addr = server.address();
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
+
+  logger.info("Server listening on " + bind)
+
+  await establishConnection()
   debug('Listening on ' + bind);
 }
