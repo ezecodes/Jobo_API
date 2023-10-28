@@ -1,6 +1,5 @@
 
 const mongoose = require('mongoose')
-const {CONSTANTS} = require('../config')
 
 const Budget = require('./Budget')
 
@@ -20,7 +19,7 @@ const userSchema = new mongoose.Schema({
 		required: true,
 		lowercase: true
 	},
-	budgets: [{type: mongoose.ObjectId, ref: Budget}]
+	budgets: [{type: mongoose.Types.ObjectId, ref: 'Budget'}]
 })
 
 
