@@ -16,15 +16,15 @@ const budgetSchema = new mongoose.Schema({
 		lowercase: true
 	},
 	amount: {
-		type: BigInt,
+		type: Number,
 		required: true
 	},
 	priority_level: {
-		type: mongoose.Types.ENUM,
-		values: CONSTANTS.BUDGET_PRIORITY_LEVELS
+		type: String,
+		enum:{values: CONSTANTS.BUDGET_PRIORITY_LEVELS}
 	},
 
-	created_by: {type: mongoose.ObjectId, ref: User}
+	created_by: {type: mongoose.Types.ObjectId, ref: 'User'}
 })
 
-modle.exports = mongoose.model('Budget', budgetSchema)
+module.exports = mongoose.model('Budget', budgetSchema)
