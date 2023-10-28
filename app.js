@@ -6,7 +6,7 @@ var morganLog = require('morgan');
 const logger = require('./logger')
 
 var usersRouterV1 = require('./routes/v1/users');
-var budgetRouterV1 = require('./routes/v1/budget');
+var budgetRouterV1 = require('./routes/v1/budgets');
 
 var app = express();
 
