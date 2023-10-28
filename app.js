@@ -2,29 +2,20 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var sassMiddleware = require('node-sass-middleware');
+var morganLog = require('morgan');
+const logger = require('./logger')
 
 var usersRouterV1 = require('./routes/v1/users');
 var budgetRouterV1 = require('./routes/v1/budget');
 
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
-app.use(logger('dev'));
+app.use(morganLog('dev'));
 app.use(require('helmet')())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(sassMiddleware({
-  src: path.join(__dirname, 'public'),
-  dest: path.join(__dirname, 'public'),
-  indentedSyntax: true, // true = .sass and false = .scss
-  sourceMap: true
-}));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.disable("etag");
@@ -46,9 +37,8 @@ app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  // logger.error(err.status)
+  // logger.debug(err.stack)
 });
 
 module.exports = app;
