@@ -4,9 +4,14 @@ const db = mongoose.connection
 
 module.exports = {
 	db,
+	DB_URL: process.env.DB_URL,
 	NODE_ENV: process.env.NODE_ENV,
-    CLIENT_ID: process.env.clientId,
-    SECRET_KEY: process.env.secretKey,
-	OpenBanking_primary_key: process.env.FCMB_open_banking_primary_key,
-	OpenBanking_secondary_key: process.env.FCMB_open_banking_secondary_key,
+    CLIENT_ID: process.env.CLIENT_ID,
+    SECRET_KEY: process.env.SECRET_KEY,
+	OPEN_BANKING_PK: process.env.OPEN_BANKING_PK,
+	OPEN_BANKING_SK: process.env.OPEN_BANKING_SK,
+
+	CONSTANTS: {
+		BUDGET_PRIORITY_LEVELS: ['high', 'medium', 'low'],
+	}
 }
