@@ -1,13 +1,24 @@
-var crypto = require('crypto')
+const crypto = require('crypto')
+const mongoose = require('mongoose');
 
-const { CLIENT_ID, SECRET_KEY }
+const { CLIENT_ID, SECRET_KEY, DB_URL } = require('../config')
+const logger = require('../logger')
 
-function generateSHA512String() {
-	let data = crypto.createHash('sha512').update(`${getFormattedDateTime()}250Re0R%0Fd`)
-	return data.digest('hex')
+async function establishConnection() {
+  logger.info('Establishing DB connection')
+  try {
+    await mongoose.connect( DB_URL , {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
+  } catch (err) {
+    logger.error('DB connection failed');
+    logger.debug(err)
+    process.exit(1)
+  }
 }
 
-function getFormattedDateTime() {
+function generateSHA512String() {
   const now = new Date();
   
   const year = now.getFullYear();
@@ -20,9 +31,14 @@ function getFormattedDateTime() {
 
   const formattedDateTime = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}`;
   
-  return formattedDateTime;
+	let data = crypto.createHash('sha512').update(`${formattedDateTime}${CLIENT_ID}${SECRET_KEY}`)
+
+	return data.digest('hex')
 }
 
+
+
+
 module.exports = {
-	generateSHA512String,
+	generateSHA512String, establishConnection
 }
