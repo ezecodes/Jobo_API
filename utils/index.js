@@ -11,6 +11,7 @@ async function establishConnection() {
       useNewUrlParser: true,
       useUnifiedTopology: true
     });
+    logger.info('DB connection established')
   } catch (err) {
     logger.error('DB connection failed');
     logger.debug(err)
