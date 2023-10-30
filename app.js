@@ -5,11 +5,16 @@ var cookieParser = require('cookie-parser');
 var morganLog = require('morgan');
 const logger = require('./logger')
 const {USER_COOKIE_SECRET} = require('./config')
+const cors = require('cors')
 
 var usersRouterV1 = require('./routes/v1/users');
 var budgetRouterV1 = require('./routes/v1/budgets');
 
 var app = express();
+
+app.use(cors({
+  methods: 'GET,POST'
+}));
 
 app.use(morganLog('dev'));
 app.use(require('helmet')())
