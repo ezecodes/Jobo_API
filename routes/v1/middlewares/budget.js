@@ -27,6 +27,7 @@ async function validateNewBudget(req, res, next) {
 		return res.status(400).json({
 			success: false, 
 			message: 'Invalid Budget Priority Level.',
+			hint: 'Valid values are "high", "low" and "medium"'
 		})
 	}
 
