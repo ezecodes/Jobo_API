@@ -6,7 +6,7 @@ const {CONSTANTS} = require('../config')
 const logger = require('../logger')
 
 let getCronTime = (priorityLevel) => {
-	const [TWO_MINUTES, FIVE_MINUTES, TEN_MINUTES] = ["* */2 * * * *", "* */5 * * * *", "* */10 * * * *"]
+	const [TWO_MINUTES, FIVE_MINUTES, TEN_MINUTES] = ["*/2 * * * *", "*/5 * * * *", "*/10 * * * *"]
 	switch (priorityLevel) {
 		case CONSTANTS.BUDGET_PRIORITY_LEVELS[0]:
 			return TWO_MINUTES;
@@ -18,22 +18,21 @@ let getCronTime = (priorityLevel) => {
 }
 
 async function executeJobAction(priorityLevel) {
-	const findBudgets = await BudgetModel.find({status: priorityLevel}).populate('created_by');
+	const findBudgets = await BudgetModel.find({status: CONSTANTS.BUDGET_STATUSES[0]}).populate('created_by');
+	console.log(findBudgets, priorityLevel, new Date())
 	if (findBudgets.length === 0) {
 		return
 	}
 	findBudgets.forEach(async budget => {
-
 		// execute for only pending budgets
-		if (budget.status === CONSTANTS.BUDGET_STATUSES[0]
-			&& budget.created_by.available_balance > budget.amount
-		) {
+		if (budget.created_by.available_balance > budget.amount) {
 			await UserModel.findByIdAndUpdate(
 				budget.created_by.id, {available_balance: budget.created_by.available_balance - budget.amount}
 			)
 
 			await BudgetModel.findByIdAndUpdate(
-				id, {status: CONSTANTS.BUDGET_STATUSES[1]}
+				budget.id, 
+				{status: CONSTANTS.BUDGET_STATUSES[1]}
 			)
 		}
 	})
