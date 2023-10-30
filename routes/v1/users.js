@@ -23,7 +23,7 @@ router.get('/', validateUser, async function(req, res, next) {
   const {userId} = req
 
   try {
-    const findUser = await UserModel.findById(userId).select(['email', 'first_name,' 'last_name', 'available_balance'])
+    const findUser = await UserModel.findById(userId).select(['email', 'first_name', 'last_name', 'available_balance'])
     if (!findUser) {
       return res.status(404).json({
         success: false,
