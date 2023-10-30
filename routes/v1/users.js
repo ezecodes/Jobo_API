@@ -18,15 +18,10 @@ const {
 
 const UserModel = require('../../models/User')
 
-const userService = require('../../services/user')
-
 /* GET users listing. */
 router.get('/:user_id', validateUser, async function(req, res, next) {
   const {userId} = req
   const {user_id} = req.params
-
-  // const accountStatement = await getAccountStatement()
-  // console.log(accountStatement)
 
 });
 
@@ -60,9 +55,7 @@ router.post('/', async (req, res) => {
     const hashedPassword = await generatePasswordHash(password)
     const newUser = await UserModel.create({
       email, 
-      password: hashedPassword, 
-      first_name: first_name || '', 
-      last_name: last_name || ''
+      password: hashedPassword
     })
 
     return res.status(201).json({
@@ -79,10 +72,14 @@ router.post('/login', validateUserCredentials, async (req, res) => {
   const token = await createJwtToken(req.userId)
   res.cookie('token', token, {
     signed: true,
-    path: '/user',
+    path: '/',
     maxAge: 1000 * 60 * 60, 
     httpOnly: true, 
     secure: NODE_ENV === 'production' ? true : false
+  });
+  res.status(200).json({
+    success: true,
+    message: 'Login Successful'
   })
 })
 
