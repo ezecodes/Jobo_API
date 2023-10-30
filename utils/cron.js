@@ -19,7 +19,6 @@ let getCronTime = (priorityLevel) => {
 
 async function executeJobAction(priorityLevel) {
 	const findBudgets = await BudgetModel.find({status: CONSTANTS.BUDGET_STATUSES[0]}).populate('created_by');
-	console.log(findBudgets, priorityLevel, new Date())
 	if (findBudgets.length === 0) {
 		return
 	}
