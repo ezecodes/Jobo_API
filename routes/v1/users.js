@@ -19,9 +19,31 @@ const {
 const UserModel = require('../../models/User')
 
 /* GET users listing. */
-router.get('/:user_id', validateUser, async function(req, res, next) {
+router.get('/', validateUser, async function(req, res, next) {
   const {userId} = req
-  const {user_id} = req.params
+
+  try {
+    const findUser = await UserModel.findById(userId).select(['email', 'first_name,' 'last_name', 'available_balance'])
+    if (!findUser) {
+      return res.status(404).json({
+        success: false,
+        message: 'Resource Not Found'
+      })
+    }
+    return res.status(200).json({
+      success: true,
+      data: {
+        user: findUser
+      }
+    })
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: 'Something went wrong'
+    })
+    logger.debug(err)
+  }
+    
 
 });
 
