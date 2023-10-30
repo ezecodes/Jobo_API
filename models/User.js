@@ -17,9 +17,11 @@ const userSchema = new mongoose.Schema({
 		required: true,
 		lowercase: true
 	},
+	available_balance: {type: Number, default: 0},
+	password: {type: String, required: true},
 	pin: {type: String, lowercase: true},
 	budgets: [{type: mongoose.Types.ObjectId, ref: 'Budget'}]
-})
+}, {timestamps: true})
 
 
 module.exports = mongoose.model('User', userSchema)
