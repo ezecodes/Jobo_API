@@ -7,9 +7,9 @@
 var app = require('../app');
 var debug = require('debug')('bankcraft:server');
 var http = require('http');
-var {establishConnection} = require('../utils/database')
 var logger = require('../logger')
-
+var {establishConnection} = require('../utils/database')
+var startCronSchedulers = require('../utils/cron')
 
 /**
  * Get port from environment and store in Express.
@@ -93,5 +93,8 @@ async function onListening() {
   logger.info("Server listening on " + bind)
 
   await establishConnection()
+
+  startCronSchedulers()
+
   debug('Listening on ' + bind);
 }
