@@ -1,6 +1,6 @@
 ## Getting started
 ### Installation
-* Run `git clone https://github.com/bnkcrft/backend` to download the repo. <br />
+* Run `git clone https://github.com/jahdevelops/Jobo_API` to download the repo. <br />
 * Run `npm ci` to install the required npm packages.
 
 ### Populating `.env` file
